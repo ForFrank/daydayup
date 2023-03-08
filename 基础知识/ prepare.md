@@ -14,14 +14,19 @@
   parseFloat((0.1+0.2).toFixed(1))
 
 ### 原型/原型链
+
 - 原型的作用：原型被定义为对象提供共享属性的对象，函数的实例可以共享原型上的属性和方法
-- __proto__:原型指针，指向构造函数的原型属性
+- **proto**:原型指针，指向构造函数的原型属性
 - prototype:原型属性
-- 原型链的作用：当访问一个对象上属性时，如果该对象内部不存在这个属性，就会去__proto__属性所指向的原型对象上查找，如果原型对象依旧不存在这个属性，那么就会去其原型对象中__proto__所指向的原型对象上去查找。以此类推，直到找到null，而这个查找线路，也就构成了我们常说的原型链
+- 原型链的作用：当访问一个对象上属性时，如果该对象内部不存在这个属性，就会去**proto**属性所指向的原型对象上查找，如果原型对象依旧不存在这个属性，那么就会去其原型对象中**proto**所指向的原型对象上去查找。以此类推，直到找到 null，而这个查找线路，也就构成了我们常说的原型链
 - 原型链和作用域的区别：原型链是查找对象上的属性，作用域链是查找当前上下文的变量
+
 #### instanceof
-- instanceof的基本用法，可以判断一个对象的原型链上是否包含该构造函数的原型，经常用来判断对象是否为构造函数的实例
-##### 手写instanceof
+
+- instanceof 的基本用法，可以判断一个对象的原型链上是否包含该构造函数的原型，经常用来判断对象是否为构造函数的实例
+
+##### 手写 instanceof
+
 ```
 function myInstanceOf(obj,fn){
   let proto = obj.__proto__;
@@ -40,3 +45,42 @@ function Test(){}
 let test = new Test()
 console.log(myInstanceOf(test,Test), myInstanceOf(test,Object)) // true, true
 ```
+
+#### new
+
+**new 一个对象，到底发生了什么**
+1、创建一个对象
+2、该对象的原型指针指向构造函数的原型
+3、构造函数的 this 指向这个新对象
+4、判断构造函数是否有返回值，如果有返回值且返回值是一个对象或一个方法，，则返回该值；否则返回新生成的对象
+**手写 new**
+
+```
+function selfNew(fn, ...args) {
+  // 创建一个instance对象，该对象的原型是fn.prototype
+  let instance = Object.create(fn.prototype);
+  //let instance = {}
+  //instance.__proto__ = Fun.prototype;
+  // 调用构造函数，使用apply，将this指向新生成的对象
+  let res = fn.apply(instance, args);
+  // 如果fn函数有返回值，并且返回值是一个对象或方法，则返回该对象，否则返回新生成的instance对象
+  //return typeof res === "object" || typeof res === "function" ? res : instance;
+  if (res instanceof Object) {
+        return res;
+    } else {
+        return instance;
+    }
+}
+```
+
+#### 继承
+
+1、原型链继承，缺点：引用类型的属性被所有实例共享，在创建 child 实例时，不能向 parent 传参
+2、借用构造函数继承，优点：1、避免了引用类型的属性被所有实例共享 2、可以在 child 中向 parent 传参 缺点：方法都在构造函数中定义，每次创建实例都会创建一遍方法
+3、原型式继承，缺点：包含引用类型的属性值始终都会共享相应的值
+4、寄生式继承，缺点：和借用构造函数模式一样，每次创建对象都会创建一遍方法
+5、组合式继承，优点：融合原型链继承和构造函数的优点
+6、寄生组合式继承，优点：1、这种方式的高效率体现在它只调用了一次 parent 构造函数，并且因此避免了在 Parent.prototype 上面创建不必要的多余的属性 2、原型链保持不变 3、能够正常使用 instanceof 和 isPrototypeOf
+**class**
+ES6 的 Class 内部是基于寄生组合式继承，它是目前最理想的继承方式
+ES6 的 Class 允许子类继承父类的静态方法和静态属性

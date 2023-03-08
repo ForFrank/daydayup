@@ -14,3 +14,5 @@
   parseFloat((0.1+0.2).toFixed(1))
 
 #### 原型
+- __proto__:原型指针，指向构造函数的原型属性
+- prototype:原型属性

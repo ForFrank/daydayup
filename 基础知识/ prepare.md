@@ -45,6 +45,8 @@ function Test(){}
 let test = new Test()
 console.log(myInstanceOf(test,Test), myInstanceOf(test,Object)) // true, true
 ```
+##### instanceof和typeof的区别
+- type一般被用来判断一个变量的类型，type可以用来判断number、undefined、symbol、string、function、boolean、object这七种类型，特殊情况：typeof null === 'object'
 
 #### new
 

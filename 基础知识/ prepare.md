@@ -143,8 +143,10 @@ const 使用时必须赋值
 **三者的区别**
 1、三者都可以显示绑定函数的 this 指向
 
-2、三者第一个参数都是 this 要指向的对象，若该参数为 undefined 或 null，this 会默认指向全局 window
+2、三者第一个参数（必须是对象）都是 this 要指向的对象，若该参数为 undefined 或 null，this 会默认指向全局 window
 
 3、传参不同：apply 是数组、call 是参数列表，bind 可以分为多次传入，实现参数合并
 
 4、call、apply 是立即执行，bind 是返回绑定 this 之后的函数，如果这个新的函数被调用，那么 this 不再指向传入的 bind 的第一个参数，而是指向新生成的对象
+
+5、实际应用：继承、改变函数执行上下文

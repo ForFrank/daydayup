@@ -150,3 +150,62 @@ const 使用时必须赋值
 4、call、apply 是立即执行，bind 是返回绑定 this 之后的函数，如果这个新的函数被调用，那么 this 不再指向传入的 bind 的第一个参数，而是指向新生成的对象
 
 5、实际应用：继承、改变函数执行上下文
+
+```
+/ 手写call
+Function.prototype.Call = function(context, ...args) {
+  // context为undefined或null时，则this默认指向全局window
+  if (context === undefined || context === null) {
+    context = window;
+  }
+  // 利用Symbol创建一个唯一的key值，防止新增加的属性与obj中的属性名重复
+  let fn = Symbol();
+  // this指向调用call的函数
+  context[fn] = this;
+  // 隐式绑定this，如执行obj.foo(), foo内的this指向obj
+  let res = context[fn](...args);
+  // 执行完以后，删除新增加的属性
+  delete context[fn];
+  return res;
+};
+
+// apply与call相似，只有第二个参数是一个数组，
+Function.prototype.Apply = function(context, args) {
+  if (context === undefined || context === null) {
+    context = window;
+  }
+  let fn = Symbol();
+  context[fn] = this;
+  let res = context[fn](...args);
+  delete context[fn];
+  return res;
+};
+// bind
+Function.prototype.myBind = function(thisArg, ...args) {
+  const fn = this; // 保存原函数
+  // 判断调用 bind() 的对象是否为函数，不是则抛出错误
+  if (typeof fn !== 'function') {
+    throw new TypeError('Function.prototype.bind - ' +
+                        'what is trying to be bound is not callable');
+  }
+  // 保存当前函数和调用 bind() 传入的参数
+  const boundFn = function(...boundArgs) {
+    // 当作为构造函数时，this 指向实例对象，通过 new 关键字调用
+    if (new.target) {
+      const result = fn.apply(this, boundArgs.concat(args));
+      if (result && (typeof result === 'object' || typeof result === 'function')) {
+        return result;
+      }
+      return this;
+    } else {
+      // 当作为普通函数时，this 指向传入的 thisArg 或全局对象
+      return fn.apply(thisArg, boundArgs.concat(args));
+    }
+  }
+  // 维护原型关系
+  if (fn.prototype) {
+    boundFn.prototype = Object.create(fn.prototype);
+  }
+  return boundFn;
+}
+```

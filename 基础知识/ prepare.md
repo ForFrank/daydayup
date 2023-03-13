@@ -209,3 +209,22 @@ Function.prototype.myBind = function(thisArg, ...args) {
   return boundFn;
 }
 ```
+#### js中类数组转为数组
+1、Array.from
+
+2、使用展开运算符
+
+3、使用bind
+```
+// 与前一段代码的 "slice" 效果相同
+var unboundSlice = Array.prototype.slice;
+var slice = Function.prototype.apply.bind(unboundSlice);
+
+// ...
+
+slice(arguments);
+```
+#### 闭包
+
+- 定义：闭包是一个可以访问外部作用域的内部函数，即使这个外部作用域已经执行结束
+- 闭包的外部作用域是在其定义的时候已决定，而不是执行的时候。

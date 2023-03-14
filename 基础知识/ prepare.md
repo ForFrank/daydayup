@@ -224,6 +224,10 @@ var slice = Function.prototype.apply.bind(unboundSlice);
 
 slice(arguments);
 ```
+#### 词法作用域
+- 词法作用域，就意味着函数被定义的时候，它的作用域就已经确定了，和拿到哪里执行没有关系，因此词法作用域也被称为 “静态作用域”。
+
+[链接](https://mitianyi.gitbook.io/frontend-interview-guide/es6/let-and-const)
 #### 闭包
 
 - 定义：闭包是一个可以访问外部作用域的内部函数，即使这个外部作用域已经执行结束
@@ -282,4 +286,5 @@ for (var i = 0; i < 5; i++) {
   }, 1000 * i, i);
 }
 ```
+[关于for循环中使用setTimeout的四种解决方案](https://www.cnblogs.com/wl0804/p/11987833.html)
 

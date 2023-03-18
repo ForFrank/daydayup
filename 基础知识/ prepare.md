@@ -300,8 +300,29 @@ for (var i = 0; i < 5; i++) {
 
 - promise 对象有三种状态：进行中（pending）、已完成（fulfilled）、失败（rejected）
 - promise 对象有两个过程：pending -> fulfilled，pending->rejected，过程不可逆
-  **promise 中的静态方法** - 1、Promise.resolve(value) 返回一个 Promise 对象，它已经被 fulfilled 了，返回值为指定的值（可以是任何 JavaScript 值，包括 Promise 对象）。如果传入的值是一个 Promise 对象，它将直接返回这个 Promise 对象，而不是创建一个新的 Promise 对象。 - 2、Promise.reject(reason)返回一个 Promise 对象，它已经被 rejected 了，原因为指定的值。 - 3、Promise.all(iterable) 只有状态都变成 fulfilled，状态才会变成 fulfilled，此时返回值组成一个数组，传递给回调函数。只要有一个被 rejected，状态就变成 rejected，此时第一个被 reject 的实例的返回值，会传递给回调函数。 - 4、Promise.race(iterable) 只要有一个实例率先改变状态，状态就跟着改变。那个率先改变的 Promise 实例的返回值，就传递给回调函数 - 5、Promise.allSettled(iterable) 只有等到参数数组的所有 Promise 对象都发生状态变更（不管是 fulfilled 还是 rejected），返回的 Promise 对象才会发生状态变更 - 6、Promise.any(iterable) 只要参数实例有一个变成 fulfilled 状态，包装实例就会变成 fulfilled 状态；如果所有参数实例都变成 rejected 状态，包装实例就会变成 rejected 状态
+  **promise 中的静态方法**
+- 1、Promise.resolve(value) 返回一个 Promise 对象，它已经被 fulfilled 了，返回值为指定的值（可以是任何 JavaScript 值，包括 Promise 对象）。如果传入的值是一个 Promise 对象，它将直接返回这个 Promise 对象，而不是创建一个新的 Promise 对象。
+- 2、Promise.reject(reason)返回一个 Promise 对象，它已经被 rejected 了，原因为指定的值。
+- 3、Promise.all(iterable) 只有状态都变成 fulfilled，状态才会变成 fulfilled，此时返回值组成一个数组，传递给回调函数。只要有一个被 rejected，状态就变成 rejected，此时第一个被 reject 的实例的返回值，会传递给回调函数。
+- 4、Promise.race(iterable) 只要有一个实例率先改变状态，状态就跟着改变。那个率先改变的 Promise 实例的返回值，就传递给回调函数
+- 5、Promise.allSettled(iterable) 只有等到参数数组的所有 Promise 对象都发生状态变更（不管是 fulfilled 还是 rejected），返回的 Promise 对象才会发生状态变更
+- 6、Promise.any(iterable) 只要参数实例有一个变成 fulfilled 状态，包装实例就会变成 fulfilled 状态；如果所有参数实例都变成 rejected 状态，包装实例就会变成 rejected 状态
   **promise 中的实例方法**
 - Promise.prototype.then() Promise 实例添加状态改变时的回调函数，回的是一个新的 Promise 实例
 - Promise.prototype.catch()如果异步操作抛出错误，状态就会变为 rejected，就会调用 catch()方法指定的回调函数
 - Promise.prototype.finally()用于指定不管 Promise 对象最后状态如何，都会执行的操作
+
+#### async、await
+
+- 作用：用同步方式，执行异步操作
+  **总结**
+- 1、async 函数是 generator（迭代函数）的语法糖
+- 2、async 函数返回的是一个 Promise 对象，有无值看有无 return 值
+- 3、await 关键字只能放在 async 函数内部，await 关键字的作用 就是获取 Promise 中返回的 resolve 或者 reject 的值 （从 ES2022 开始，允许在模块的顶层独立使用 await 命令）
+- 4、async、await 要结合 try/catch 使用，防止意外的错误
+
+#### agenerator
+
+- 1、generator 函数跟普通函数在写法上的区别就是，多了一个星号\*
+- 2、只有在 generator 函数中才能使用 yield，相当于 generator 函数执行的中途暂停点
+- 3、generator 函数是不会自动执行的，每一次调用它的 next 方法，会停留在下一个 yield 的位置

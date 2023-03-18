@@ -209,12 +209,15 @@ Function.prototype.myBind = function(thisArg, ...args) {
   return boundFn;
 }
 ```
-#### js中类数组转为数组
+
+#### js 中类数组转为数组
+
 1、Array.from
 
 2、使用展开运算符
 
-3、使用bind
+3、使用 bind
+
 ```
 // 与前一段代码的 "slice" 效果相同
 var unboundSlice = Array.prototype.slice;
@@ -224,10 +227,13 @@ var slice = Function.prototype.apply.bind(unboundSlice);
 
 slice(arguments);
 ```
+
 #### 词法作用域
+
 - 词法作用域，就意味着函数被定义的时候，它的作用域就已经确定了，和拿到哪里执行没有关系，因此词法作用域也被称为 “静态作用域”。
 
 [链接](https://mitianyi.gitbook.io/frontend-interview-guide/es6/let-and-const)
+
 #### 闭包
 
 - 定义：闭包是一个可以访问外部作用域的内部函数，即使这个外部作用域已经执行结束
@@ -252,6 +258,7 @@ slice(arguments);
 闭包中引用的变量直到闭包被销毁时才会被垃圾回收
 
 **示例**
+
 ```
 // 原始题目
 for (var i = 0; i < 5; i++) {
@@ -286,5 +293,15 @@ for (var i = 0; i < 5; i++) {
   }, 1000 * i, i);
 }
 ```
-[关于for循环中使用setTimeout的四种解决方案](https://www.cnblogs.com/wl0804/p/11987833.html)
 
+[关于 for 循环中使用 setTimeout 的四种解决方案](https://www.cnblogs.com/wl0804/p/11987833.html)
+
+#### promise
+
+- promise 对象有三种状态：进行中（pending）、已完成（fulfilled）、失败（rejected）
+- promise 对象有两个过程：pending -> fulfilled，pending->rejected，过程不可逆
+  **promise 中的静态方法** - 1、Promise.resolve(value) 返回一个 Promise 对象，它已经被 fulfilled 了，返回值为指定的值（可以是任何 JavaScript 值，包括 Promise 对象）。如果传入的值是一个 Promise 对象，它将直接返回这个 Promise 对象，而不是创建一个新的 Promise 对象。 - 2、Promise.reject(reason)返回一个 Promise 对象，它已经被 rejected 了，原因为指定的值。 - 3、Promise.all(iterable) 只有状态都变成 fulfilled，状态才会变成 fulfilled，此时返回值组成一个数组，传递给回调函数。只要有一个被 rejected，状态就变成 rejected，此时第一个被 reject 的实例的返回值，会传递给回调函数。 - 4、Promise.race(iterable) 只要有一个实例率先改变状态，状态就跟着改变。那个率先改变的 Promise 实例的返回值，就传递给回调函数 - 5、Promise.allSettled(iterable) 只有等到参数数组的所有 Promise 对象都发生状态变更（不管是 fulfilled 还是 rejected），返回的 Promise 对象才会发生状态变更 - 6、Promise.any(iterable) 只要参数实例有一个变成 fulfilled 状态，包装实例就会变成 fulfilled 状态；如果所有参数实例都变成 rejected 状态，包装实例就会变成 rejected 状态
+  **romise 中的实例方法**
+- Promise.prototype.then() Promise 实例添加状态改变时的回调函数，回的是一个新的 Promise 实例
+- Promise.prototype.catch()如果异步操作抛出错误，状态就会变为 rejected，就会调用 catch()方法指定的回调函数
+- Promise.prototype.finally()用于指定不管 Promise 对象最后状态如何，都会执行的操作

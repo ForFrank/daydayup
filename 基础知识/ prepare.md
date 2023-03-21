@@ -367,3 +367,112 @@ for (var i = 0; i < 5; i++) {
 - 1、generator 函数跟普通函数在写法上的区别就是，多了一个星号\*
 - 2、只有在 generator 函数中才能使用 yield，相当于 generator 函数执行的中途暂停点
 - 3、generator 函数是不会自动执行的，每一次调用它的 next 方法，会停留在下一个 yield 的位置
+#### 浅拷贝/深拷贝
+- 浅拷贝：Object.assign()，只解决了第一层的基本数据类型及第一层的引用类型地址
+**深拷贝**
+- 方法：1、JSON.parse(JSON.stringfy()) 2、使用递归手写 3、第三方库，如lodash等
+- JSON.parse(JSON.stringfy())
+缺点：无法拷贝函数、正则、时间格式、原型属性上的方法、会忽略undefined、symbol，无法处理循环引用的情况
+#### 时间轮询机制 Event Loop
+宏任务指的是，在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行下一个任务
+
+微任务指的是，不进入主线程、而进入"微任务列表"的任务
+当前宏任务执行完后，会判断微任务列表中是否有任务。如果有，会把该微任务放到主线程中并执行，如果没有，就继续执行下一个宏任务
+
+**宏任务 微任务**
+**1）宏任务（Macrotasks）**
+
+script全部代码（注意同步代码也属于宏任务）、setTimeout、setInterval、setImmediate等
+
+**2）微任务（Microtasks）**
+
+Promise、MutationObserver
+
+**事件轮询机制执行过程**
+
+1）代码执行过程中，宏任务和微任务放在不同的任务队列中
+
+2）当某个宏任务执行完后,会查看微任务队列是否有任务。如果有，执行微任务队列中的所有微任务(注意这里是执行所有的微任务)
+
+3）微任务执行完成后，会读取宏任务队列中排在最前的第一个宏任务（注意宏任务是一个个取），执行该宏任务，如果执行过程中，遇到微任务，依次加入微任务队列
+
+4）宏任务执行完成后，再次读取微任务队列里的任务，依次类推。
+
+**async、await事件轮询执行时机**
+
+async隐式返回Promise，会产生一个微任务
+await后面的代码是在微任务时执行
+
+**event loop 与 浏览器更新渲染时机**
+
+1） 浏览器更新渲染会在event loop中的 宏任务 和 微任务 完成后进行，即宏任务 →  微任务  →  渲染更新（先宏任务 再微任务，然后再渲染更新）
+
+2）宏任务队列中，如果有大量任务等待执行时，将dom的变动作为微任务，能更快的将变化呈现给用户，这样就可以在这一次的事件轮询中更新dom
+
+**event loop与 vue nextTick**
+
+**vue nextTick为什么要优先使用微任务实现？**
+
+1） vue nextTick的源码实现，优先级判断，总结就是Promise > MutationObserver > setImmediate > setTimeout 
+
+2）这里优先使用Promise，因为根据event loop与浏览器更新渲染时机，使用微任务，本次event loop轮询就可以获取到更新的dom
+
+3）如果使用宏任务，要到下一次event loop中，才能获取到更新的dom
+
+**Node中的process.nextTick**
+
+有很多文章把Node的process.nextTick和微任务混为一谈，但其实并不是同一个东西
+
+process.nextTick 是 Node.js 自身定义实现的一种机制，有自己的 nextTickQueue
+
+process.nextTick执行顺序早于微任务
+
+#### 定时器
+
+JS提供了一些原生方法来实现延时去执行某一段代码
+
+**setTimeout/**
+
+setTimeout固定时长后执行
+
+setInterval间隔固定时间重复执行
+
+setTimeout、setInterval最短时长为4ms
+
+**定时器不准的原因**
+
+setTimeout/setInterval的执行时间并不是确定的
+
+setTimeout/setInterval是宏任务，根据事件轮询机制，其他任务会阻塞或延迟js任务的执行
+
+考虑极端情况，假如定时器里面的代码需要进行大量的计算，或者是DOM操作，代码执行时间超过定时器的时间，会出现定时器不准的情况
+
+**setTimeout/setInterval 动画卡顿**
+
+不同设备的屏幕刷新频率可能不同， setTimeout/setInterval只能设置固定的时间间隔，这个时间和屏幕刷新间隔可能不同
+
+setTimeout/setInterval通过设置一个间隔时间，来不断改变图像实现动画效果，在不同设备上可能会出现卡顿、抖动等现象
+
+**requestAnimationFrame**
+
+requestAnimationFrame 是浏览器专门为动画提供的API
+
+requestAnimationFrame刷新频率与显示器的刷新频率保持一致，使用该api可以避免使用setTimeout/setInterval造成动画卡顿的情况
+
+requestAnimationFrame：告诉浏览器在下次重绘之前执行传入的回调函数(通常是操纵dom，更新动画的函数)
+
+**setTimeout、setInterval、requestAnimationFrame 三者的区别**
+
+**1）引擎层面**
+
+setTimeout属于 JS引擎 ，存在事件轮询
+
+requestAnimationFrame 属于 GUI引擎
+
+JS引擎与GUI引擎是互斥的，也就是说 GUI引擎在渲染时会阻塞JS引擎的计算
+这样设计的原因，如果在GUI渲染的时候，JS同时又改变了dom，那么就会造成页面渲染不同步
+
+**2）性能层面**
+
+当页面被隐藏或最小化时，定时器 setTimeout仍会在后台执行动画任务
+当页面处于未激活的状态下，该页面的屏幕刷新任务会被系统暂停，requestAnimationFrame也会停止

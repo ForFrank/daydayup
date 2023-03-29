@@ -367,13 +367,17 @@ for (var i = 0; i < 5; i++) {
 - 1、generator 函数跟普通函数在写法上的区别就是，多了一个星号\*
 - 2、只有在 generator 函数中才能使用 yield，相当于 generator 函数执行的中途暂停点
 - 3、generator 函数是不会自动执行的，每一次调用它的 next 方法，会停留在下一个 yield 的位置
+
 #### 浅拷贝/深拷贝
+
 - 浅拷贝：Object.assign()，只解决了第一层的基本数据类型及第一层的引用类型地址
-**深拷贝**
-- 方法：1、JSON.parse(JSON.stringfy()) 2、使用递归手写 3、第三方库，如lodash等
+  **深拷贝**
+- 方法：1、JSON.parse(JSON.stringfy()) 2、使用递归手写 3、第三方库，如 lodash 等
 - JSON.parse(JSON.stringfy())
-缺点：无法拷贝函数、正则、时间格式、原型属性上的方法、会忽略undefined、symbol，无法处理循环引用的情况
+  缺点：无法拷贝函数、正则、时间格式、原型属性上的方法、会忽略 undefined、symbol，无法处理循环引用的情况
+
 #### 时间轮询机制 Event Loop
+
 宏任务指的是，在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行下一个任务
 
 微任务指的是，不进入主线程、而进入"微任务列表"的任务
@@ -382,7 +386,7 @@ for (var i = 0; i < 5; i++) {
 **宏任务 微任务**
 **1）宏任务（Macrotasks）**
 
-script全部代码（注意同步代码也属于宏任务）、setTimeout、setInterval、setImmediate等
+script 全部代码（注意同步代码也属于宏任务）、setTimeout、setInterval、setImmediate 等
 
 **2）微任务（Microtasks）**
 
@@ -398,110 +402,111 @@ Promise、MutationObserver
 
 4）宏任务执行完成后，再次读取微任务队列里的任务，依次类推。
 
-**async、await事件轮询执行时机**
+**async、await 事件轮询执行时机**
 
-async隐式返回Promise，会产生一个微任务
-await后面的代码是在微任务时执行
+async 隐式返回 Promise，会产生一个微任务
+await 后面的代码是在微任务时执行
 
 **event loop 与 浏览器更新渲染时机**
 
-1） 浏览器更新渲染会在event loop中的 宏任务 和 微任务 完成后进行，即宏任务 →  微任务  →  渲染更新（先宏任务 再微任务，然后再渲染更新）
+1） 浏览器更新渲染会在 event loop 中的 宏任务 和 微任务 完成后进行，即宏任务 → 微任务 → 渲染更新（先宏任务 再微任务，然后再渲染更新）
 
-2）宏任务队列中，如果有大量任务等待执行时，将dom的变动作为微任务，能更快的将变化呈现给用户，这样就可以在这一次的事件轮询中更新dom
+2）宏任务队列中，如果有大量任务等待执行时，将 dom 的变动作为微任务，能更快的将变化呈现给用户，这样就可以在这一次的事件轮询中更新 dom
 
-**event loop与 vue nextTick**
+**event loop 与 vue nextTick**
 
-**vue nextTick为什么要优先使用微任务实现？**
+**vue nextTick 为什么要优先使用微任务实现？**
 
-1） vue nextTick的源码实现，优先级判断，总结就是Promise > MutationObserver > setImmediate > setTimeout 
+1） vue nextTick 的源码实现，优先级判断，总结就是 Promise > MutationObserver > setImmediate > setTimeout
 
-2）这里优先使用Promise，因为根据event loop与浏览器更新渲染时机，使用微任务，本次event loop轮询就可以获取到更新的dom
+2）这里优先使用 Promise，因为根据 event loop 与浏览器更新渲染时机，使用微任务，本次 event loop 轮询就可以获取到更新的 dom
 
-3）如果使用宏任务，要到下一次event loop中，才能获取到更新的dom
+3）如果使用宏任务，要到下一次 event loop 中，才能获取到更新的 dom
 
-**Node中的process.nextTick**
+**Node 中的 process.nextTick**
 
-有很多文章把Node的process.nextTick和微任务混为一谈，但其实并不是同一个东西
+有很多文章把 Node 的 process.nextTick 和微任务混为一谈，但其实并不是同一个东西
 
 process.nextTick 是 Node.js 自身定义实现的一种机制，有自己的 nextTickQueue
 
-process.nextTick执行顺序早于微任务
+process.nextTick 执行顺序早于微任务
 
 #### 定时器
 
-JS提供了一些原生方法来实现延时去执行某一段代码
+JS 提供了一些原生方法来实现延时去执行某一段代码
 
 **setTimeout/**
 
-setTimeout固定时长后执行
+setTimeout 固定时长后执行
 
-setInterval间隔固定时间重复执行
+setInterval 间隔固定时间重复执行
 
-setTimeout、setInterval最短时长为4ms
+setTimeout、setInterval 最短时长为 4ms
 
 **定时器不准的原因**
 
-setTimeout/setInterval的执行时间并不是确定的
+setTimeout/setInterval 的执行时间并不是确定的
 
-setTimeout/setInterval是宏任务，根据事件轮询机制，其他任务会阻塞或延迟js任务的执行
+setTimeout/setInterval 是宏任务，根据事件轮询机制，其他任务会阻塞或延迟 js 任务的执行
 
-考虑极端情况，假如定时器里面的代码需要进行大量的计算，或者是DOM操作，代码执行时间超过定时器的时间，会出现定时器不准的情况
+考虑极端情况，假如定时器里面的代码需要进行大量的计算，或者是 DOM 操作，代码执行时间超过定时器的时间，会出现定时器不准的情况
 
 **setTimeout/setInterval 动画卡顿**
 
-不同设备的屏幕刷新频率可能不同， setTimeout/setInterval只能设置固定的时间间隔，这个时间和屏幕刷新间隔可能不同
+不同设备的屏幕刷新频率可能不同， setTimeout/setInterval 只能设置固定的时间间隔，这个时间和屏幕刷新间隔可能不同
 
-setTimeout/setInterval通过设置一个间隔时间，来不断改变图像实现动画效果，在不同设备上可能会出现卡顿、抖动等现象
+setTimeout/setInterval 通过设置一个间隔时间，来不断改变图像实现动画效果，在不同设备上可能会出现卡顿、抖动等现象
 
 **requestAnimationFrame**
 
-requestAnimationFrame 是浏览器专门为动画提供的API
+requestAnimationFrame 是浏览器专门为动画提供的 API
 
-requestAnimationFrame刷新频率与显示器的刷新频率保持一致，使用该api可以避免使用setTimeout/setInterval造成动画卡顿的情况
+requestAnimationFrame 刷新频率与显示器的刷新频率保持一致，使用该 api 可以避免使用 setTimeout/setInterval 造成动画卡顿的情况
 
-requestAnimationFrame：告诉浏览器在下次重绘之前执行传入的回调函数(通常是操纵dom，更新动画的函数)
+requestAnimationFrame：告诉浏览器在下次重绘之前执行传入的回调函数(通常是操纵 dom，更新动画的函数)
 
 **setTimeout、setInterval、requestAnimationFrame 三者的区别**
 
 **1）引擎层面**
 
-setTimeout属于 JS引擎 ，存在事件轮询
+setTimeout 属于 JS 引擎 ，存在事件轮询
 
-requestAnimationFrame 属于 GUI引擎
+requestAnimationFrame 属于 GUI 引擎
 
-JS引擎与GUI引擎是互斥的，也就是说 GUI引擎在渲染时会阻塞JS引擎的计算
-这样设计的原因，如果在GUI渲染的时候，JS同时又改变了dom，那么就会造成页面渲染不同步
+JS 引擎与 GUI 引擎是互斥的，也就是说 GUI 引擎在渲染时会阻塞 JS 引擎的计算
+这样设计的原因，如果在 GUI 渲染的时候，JS 同时又改变了 dom，那么就会造成页面渲染不同步
 
 **2）性能层面**
 
-当页面被隐藏或最小化时，定时器 setTimeout仍会在后台执行动画任务
-当页面处于未激活的状态下，该页面的屏幕刷新任务会被系统暂停，requestAnimationFrame也会停止
+当页面被隐藏或最小化时，定时器 setTimeout 仍会在后台执行动画任务
+当页面处于未激活的状态下，该页面的屏幕刷新任务会被系统暂停，requestAnimationFrame 也会停止
 
 **Web Worker**
 
 让前端拥有后端的计算能力
 
-在HTML5的新规范中，实现了 Web Worker 来引入 js 的 多线程 技术, 可以让我们在页面主运行的js线程中，加载运行另外单独的一个或者多个 js线程
-Web Worker专门处理复杂计算的，从此让前端拥有后端的计算能力
+在 HTML5 的新规范中，实现了 Web Worker 来引入 js 的 多线程 技术, 可以让我们在页面主运行的 js 线程中，加载运行另外单独的一个或者多个 js 线程
+Web Worker 专门处理复杂计算的，从此让前端拥有后端的计算能力
 页面大量计算，造成假死
 
-浏览器有GUI渲染线程与JS引擎线程，这两个线程是互斥的关系
-当js有大量计算时，会造成UI 阻塞，出现界面卡顿、掉帧等情况，严重时会出现页面卡死的情况，俗称假死
+浏览器有 GUI 渲染线程与 JS 引擎线程，这两个线程是互斥的关系
+当 js 有大量计算时，会造成 UI 阻塞，出现界面卡顿、掉帧等情况，严重时会出现页面卡死的情况，俗称假死
 
-**计算时长超过多久适合用Web Worker**
+**计算时长超过多久适合用 Web Worker**
 
 **原则：**
 
-运算时间超过50ms会造成页面卡顿，属于Long task，这种情况就可以考虑使用Web Worker
-但还要先考虑通信时长的问题，假如一个运算执行时长为100ms, 但是通信时长为300ms, 用了Web Worker可能会更慢
+运算时间超过 50ms 会造成页面卡顿，属于 Long task，这种情况就可以考虑使用 Web Worker
+但还要先考虑通信时长的问题，假如一个运算执行时长为 100ms, 但是通信时长为 300ms, 用了 Web Worker 可能会更慢
 
 **最终标准：**
 
-计算的运算时长 - 通信时长 > 50ms，推荐使用Web Worker
-
+计算的运算时长 - 通信时长 > 50ms，推荐使用 Web Worker
 
 ## Vue.js
-**Vue事件修饰符**
+
+#### Vue 事件修饰符
+
 - .stop - 调用 event.stopPropagation()。阻止事件冒泡
 - .prevent - 调用 event.preventDefault()。阻止默认事件
 - .capture - 添加事件侦听器时使用 capture 模式。
@@ -514,5 +519,12 @@ Web Worker专门处理复杂计算的，从此让前端拥有后端的计算能�
 - .middle - (2.2.0) 只当点击鼠标中键时触发。
 - .passive - (2.3.0) 以 { passive: true } 模式添加侦听器
 
+#### v-for 为什么使用 key
 
+为了高效更新 dom，提高渲染速度
 
+如果不使用 key，Vue 会使用一种最大限度减少动态元素并且尽可能的尝试就地修改/复用相同类型元素的算法。key 是为 Vue 中 vnode 的唯一标记，通过这个 key，我们的 diff 操作可以更准确、更快速
+
+更准确：因为带 key 就不是就地复用了，在 sameNode 函数 a.key === b.key 对比中可以避免就地复用的情况。所以会更加准确。
+
+更快速：利用 key 的唯一性生成 map 对象来获取对应节点，比遍历方式更快

@@ -613,3 +613,19 @@ Web Worker 专门处理复杂计算的，从此让前端拥有后端的计算能
 
 常见的置换元素：img、video、audio、iframe、audio、canvas、input、textarea、select、object、embed
 
+#### v-model 
+v-model是vue.js提供的一种语法糖，用于简化表单元素和vue实例之间的双向绑定。它相当于将一个属性绑定和一个事件监听器综合使用。
+
+举例：v-modle="value"相当于v-bind:"value" @input="value=$event.target.value"
+
+#### vue插槽的种类
+
+默认插槽
+
+具名插槽
+
+作用于插槽
+
+动态插槽名（2.6新增）
+
+

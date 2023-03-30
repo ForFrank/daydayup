@@ -531,19 +531,14 @@ Web Worker 专门处理复杂计算的，从此让前端拥有后端的计算能
 
 #### 变量标识符
 
-1、第一个字符必须是一个字母、下划线（_）或美元（$）,关键字、保留字都不能作为标识符
+1、第一个字符必须是一个字母、下划线（\_）或美元（$）,关键字、保留字都不能作为标识符
 
-#### css选择器优先级
+#### css 选择器优先级
 
-第一优先级：!important 会覆盖页面内任何位置的元素样式
-1.内联样式，如 style="color: green"，权值为 1000
-2.ID 选择器，如#app，权值为 0100
-3.类、伪类、属性选择器，如.foo, :first-child, div[class="foo"]，权值为 0010
-4.标签、伪元素选择器，如 div::first-line，权值为 0001
-5.通配符、子类选择器、兄弟选择器，如*, >, +，权值为 0000
-6.继承的样式没有权值
+第一优先级：!important 会覆盖页面内任何位置的元素样式 1.内联样式，如 style="color: green"，权值为 1000
+2.ID 选择器，如#app，权值为 0100 3.类、伪类、属性选择器，如.foo, :first-child, div[class="foo"]，权值为 0010 4.标签、伪元素选择器，如 div::first-line，权值为 0001 5.通配符、子类选择器、兄弟选择器，如\*, >, +，权值为 0000 6.继承的样式没有权值
 
-#### http状态码
+#### http 状态码
 
 **5XX（服务器错误）**
 
@@ -557,7 +552,7 @@ Web Worker 专门处理复杂计算的，从此让前端拥有后端的计算能
 
 504：Gateway Timeout，网关超时
 
-505：Http Version Not Support，HPPT版本不可用
+505：Http Version Not Support，HPPT 版本不可用
 
 **4XX（客服端错误）**
 
@@ -577,15 +572,15 @@ Web Worker 专门处理复杂计算的，从此让前端拥有后端的计算能
 
 **3XX（重定向）**
 
-301: Moved Permanently，永久重定向，表示请求的资源已被永久移动到另一个URL
+301: Moved Permanently，永久重定向，表示请求的资源已被永久移动到另一个 URL
 
-302：Found，临时重定向，表示请求的资源暂时被移动到另一个URL
+302：Found，临时重定向，表示请求的资源暂时被移动到另一个 URL
 
-303：See Other，表示请求的资源已经被处理，可以在另一个URL找到所需要的资源
+303：See Other，表示请求的资源已经被处理，可以在另一个 URL 找到所需要的资源
 
-307：Temporary Redirect，与302类似，但是客户端应该使用原始请求URI进行访问
+307：Temporary Redirect，与 302 类似，但是客户端应该使用原始请求 URI 进行访问
 
-308：Permanent Redirect，与301类似，但是客户端应该使用原始请求URI进行访问
+308：Permanent Redirect，与 301 类似，但是客户端应该使用原始请求 URI 进行访问
 
 **2XX（成功）**
 
@@ -595,30 +590,31 @@ Web Worker 专门处理复杂计算的，从此让前端拥有后端的计算能
 
 204：No Content，请求已成功处理，但响应报文中没有实体的主体部分返回
 
-206：Partial Content，客户端进行了范围请求，服务器成功执行了这部分的GET请求
+206：Partial Content，客户端进行了范围请求，服务器成功执行了这部分的 GET 请求
 
 **1XX（信息状态码）**
 
 100：Continue，指示客户端可以继续发送请求
 
-101：Switching Protocols，指示服务器正在切换协议（比如从HTTP到WebSocket）
+101：Switching Protocols，指示服务器正在切换协议（比如从 HTTP 到 WebSocket）
 
 102：Processing，指示服务器已经受到并正在处理请求，但尚未完成
 
 103：Early Hints，指示服务器将在稍后发送更多的响应头，用于提供有关的提示信息
 
-#### HTML中的置换元素
+#### HTML 中的置换元素
 
-定义：置换元素指内容在渲染时会被替换为外部资源（如图片、视频音频等），这些元素的内容不由CSS控制，而是由浏览器根据其属性和外部资源生成的
+定义：置换元素指内容在渲染时会被替换为外部资源（如图片、视频音频等），这些元素的内容不由 CSS 控制，而是由浏览器根据其属性和外部资源生成的
 
 常见的置换元素：img、video、audio、iframe、audio、canvas、input、textarea、select、object、embed
 
-#### v-model 
-v-model是vue.js提供的一种语法糖，用于简化表单元素和vue实例之间的双向绑定。它相当于将一个属性绑定和一个事件监听器综合使用。
+#### v-model
 
-举例：v-modle="value"相当于v-bind:"value" @input="value=$event.target.value"
+v-model 是 vue.js 提供的一种语法糖，用于简化表单元素和 vue 实例之间的双向绑定。它相当于将一个属性绑定和一个事件监听器综合使用。
 
-#### vue插槽的种类
+举例：v-modle="value"相当于 v-bind:"value" @input="value=$event.target.value"
+
+#### vue 插槽的种类
 
 默认插槽
 
@@ -626,14 +622,60 @@ v-model是vue.js提供的一种语法糖，用于简化表单元素和vue实例�
 
 作用于插槽
 
-动态插槽名（2.6新增）
+动态插槽名（2.6 新增）
 
+#### 在 vue 中方，dom 渲染在哪个周期中已经完成
 
-#### 在vue中方，dom渲染在哪个周期中已经完成
+mounted 中，需要注意的是，虽然 mounted 钩子函数表示 dom 已经渲染完毕，但并不意味着浏览器已经将所有的元素呈现出来。如果应用该程序存在大量的异步或者有复杂的样式表，那么浏览器可能任需要一些时间来完成渲染过程。因此，在 vue.js 中，建议使用 nextTick()方法确保 dom 已经全部渲染完毕再执行一些需要依赖的操作，例如获取元素尺寸或计算位置。
 
-mounted中，需要注意的是，虽然mounted钩子函数表示dom已经渲染完毕，但并不意味着浏览器已经将所有的元素呈现出来。如果应用该程序存在大量的异步或者有复杂的样式表，那么浏览器可能任需要一些时间来完成渲染过程。因此，在vue.js中，建议使用nextTick()方法确保dom已经全部渲染完毕再执行一些需要依赖的操作，例如获取元素尺寸或计算位置。
+#### meta 标签
 
+#### vue 自定义指令有哪些钩子函数
 
-#### meta标签
+bind、inserted、update、componentUppdated、unbind
 
+```
+export default {
+  bind(el, binding, vnode) {
+    // 指令绑定时调用
+  },
+  inserted(el, binding, vnode) {
+    // 指令插入到 DOM 中时调用
+  },
+  update(el, binding, vnode, oldVnode) {
+    // 指令的值更新时调用
+  },
+  componentUpdated(el, binding, vnode, oldVnode) {
+    // 指令所在组件的 VNode 更新时调用
+  },
+  unbind(el, binding, vnode) {
+    // 指令与元素解绑时调用
+  }
+}
+```
 
+#### 当页面数据发生变化时，会触发 updated 和 beforeUpdate 钩子函数
+
+#### vue 中哪种路由传递参数的方式页面刷新参数不会消失
+
+使用 query 参数传递参数的方式，页面刷新参数不会消失。这是因为 query 参数会以 URL 参数的形式出现在浏览器地址栏中，而页面刷新时 URL 参数不会丢失。
+
+#### vue 中通过哪种方式可以获得事件对象的 event
+
+在 Vue 中，可以给事件处理函数传递一个参数来获取事件对象，这个参数的名称可以自定义，不一定要是 $event，也可以是 event、evt 或者其他的名称。
+
+但是需要注意的是，在模板中使用 $event 这个名称时，Vue 会自动将事件对象作为参数传递给事件处理函数。如果使用其他的名称，则需要手动传递事件对象
+
+#### Vue 将被侦听的数组的变更方法进行了包裹，所以它们也将会触发视图更新。这些被包裹过的方法包括：
+
+push()
+pop()
+shift()
+unshift()
+splice()
+sort()
+reverse()
+
+#### vue 中的 props 可以检测哪些类型
+
+String、Number、Boolean、Array、Object、Date、Function、Symbol

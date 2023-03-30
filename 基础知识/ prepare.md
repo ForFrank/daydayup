@@ -545,6 +545,20 @@ Web Worker 专门处理复杂计算的，从此让前端拥有后端的计算能
 
 #### http状态码
 
+**5XX（服务器错误）**
+
+500：Internal Server Error，服务器内部错误
+
+501：Not Implemented，未实现
+
+502：Bad Gateway，网关错误
+
+503：Service Unavailable，服务不可用
+
+504：Gateway Timeout，网关超时
+
+505：Http Version Not Support，HPPT版本不可用
+
 **4XX（客服端错误）**
 
 400：Bad Request，请求格式错误或者无效
@@ -562,4 +576,40 @@ Web Worker 专门处理复杂计算的，从此让前端拥有后端的计算能
 429：Too Many Requests，因为请求频率过高，服务器拒绝服务请求
 
 **3XX（重定向）**
+
+301: Moved Permanently，永久重定向，表示请求的资源已被永久移动到另一个URL
+
+302：Found，临时重定向，表示请求的资源暂时被移动到另一个URL
+
+303：See Other，表示请求的资源已经被处理，可以在另一个URL找到所需要的资源
+
+307：Temporary Redirect，与302类似，但是客户端应该使用原始请求URI进行访问
+
+308：Permanent Redirect，与301类似，但是客户端应该使用原始请求URI进行访问
+
+**2XX（成功）**
+
+200：OK，请求成功
+
+201：Created，请求已被创建，新的资源已经成功创建
+
+204：No Content，请求已成功处理，但响应报文中没有实体的主体部分返回
+
+206：Partial Content，客户端进行了范围请求，服务器成功执行了这部分的GET请求
+
+**1XX（信息状态码）**
+
+100：Continue，指示客户端可以继续发送请求
+
+101：Switching Protocols，指示服务器正在切换协议（比如从HTTP到WebSocket）
+
+102：Processing，指示服务器已经受到并正在处理请求，但尚未完成
+
+103：Early Hints，指示服务器将在稍后发送更多的响应头，用于提供有关的提示信息
+
+#### HTML中的置换元素
+
+定义：置换元素指内容在渲染时会被替换为外部资源（如图片、视频音频等），这些元素的内容不由CSS控制，而是由浏览器根据其属性和外部资源生成的
+
+常见的置换元素：img、video、audio、iframe、audio、canvas、input、textarea、select、object、embed
 

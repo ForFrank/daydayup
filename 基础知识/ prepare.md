@@ -629,10 +629,30 @@ v-model 是 vue.js 提供的一种语法糖，用于简化表单元素和 vue �
 mounted 中，需要注意的是，虽然 mounted 钩子函数表示 dom 已经渲染完毕，但并不意味着浏览器已经将所有的元素呈现出来。如果应用该程序存在大量的异步或者有复杂的样式表，那么浏览器可能任需要一些时间来完成渲染过程。因此，在 vue.js 中，建议使用 nextTick()方法确保 dom 已经全部渲染完毕再执行一些需要依赖的操作，例如获取元素尺寸或计算位置。
 
 #### meta 标签
+1、字符编码
+```
+<meta charset="utf-8">
+```
+2、页面描述
+```
+<meta name="descript" content="描述">
+```
+#### 当页面数据发生变化时，会触发 updated 和 beforeUpdate 钩子函数
+3、视口设置
+```
+<meta name="viewport" content="width=device-width, intial-scale=1.0">
+```
+
+4、
+```
+<meta name="descript" content="描述">
+```
 
 #### vue 自定义指令有哪些钩子函数
 
 bind、inserted、update、componentUppdated、unbind
+
+
 
 ```
 export default {
@@ -654,7 +674,6 @@ export default {
 }
 ```
 
-#### 当页面数据发生变化时，会触发 updated 和 beforeUpdate 钩子函数
 
 #### vue 中哪种路由传递参数的方式页面刷新参数不会消失
 

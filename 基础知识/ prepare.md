@@ -630,6 +630,32 @@ mounted 中，需要注意的是，虽然 mounted 钩子函数表示 dom 已经�
 
 #### meta 标签
 
+1、字符编码
+
+```
+<meta charset="utf-8">
+```
+
+2、页面描述
+
+```
+<meta name="descript" content="描述">
+```
+
+#### 当页面数据发生变化时，会触发 updated 和 beforeUpdate 钩子函数
+
+3、视口设置
+
+```
+<meta name="viewport" content="width=device-width, intial-scale=1.0">
+```
+
+4、
+
+```
+<meta name="descript" content="描述">
+```
+
 #### vue 自定义指令有哪些钩子函数
 
 bind、inserted、update、componentUppdated、unbind
@@ -654,8 +680,6 @@ export default {
 }
 ```
 
-#### 当页面数据发生变化时，会触发 updated 和 beforeUpdate 钩子函数
-
 #### vue 中哪种路由传递参数的方式页面刷新参数不会消失
 
 使用 query 参数传递参数的方式，页面刷新参数不会消失。这是因为 query 参数会以 URL 参数的形式出现在浏览器地址栏中，而页面刷新时 URL 参数不会丢失。
@@ -675,6 +699,10 @@ unshift()
 splice()
 sort()
 reverse()
+
+#### vue 中的 props 可以检测哪些类型
+
+String、Number、Boolean、Array、Object、Date、Function、Symbol
 
 #### vue 中的 props 可以检测哪些类型
 

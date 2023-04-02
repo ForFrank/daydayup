@@ -704,10 +704,6 @@ reverse()
 
 String、Number、Boolean、Array、Object、Date、Function、Symbol
 
-#### vue 中的 props 可以检测哪些类型
-
-String、Number、Boolean、Array、Object、Date、Function、Symbol
-
 #### nextTick 为什么要优先使用微任务实现？
 
 1）vue nextTick 的源码实现，异步优先级判断，总结就是 Promise > MutationObserver > setImmediate > setTimeout

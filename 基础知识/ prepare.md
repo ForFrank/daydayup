@@ -721,3 +721,13 @@ String、Number、Boolean、Array、Object、Date、Function、Symbol
 2.watch是监听某一个变量的变化，并执行相应的回调函数，通常是一个变量的变化决定多个变量的变化，watch可以进行异步操作
 
 3.简单记就是：一般情况下computed是多对一，watch是一对多
+
+#### vue的响应式原理
+
+1、数据劫持，Vue.js通过Object.defineProperty()来劫持，即对象属性的读取和修改进行拦截，从而实现对数据的观察
+
+2、发布-订阅模式，Vue.js利用发布-订阅模式实现数据更新通知。当数据发生变化时，会自动通知订阅了该数据的所有Watcher对象进行更新操作
+
+3、依赖收集，Vue.js在模板编译过程中，会对模板中用到的数据进行依赖收集。当数据发生变化时，会自动重新渲染与该数据相关的部分，从而保证视图的同步更新
+
+举例：当我们在Vue.js中使用一个data属性时，例如{{message}}，Vue.js会将其转换为getter方法，并在getter方法中执行依赖收集操作，将Watcher对象添加到数据的订阅列表中，当该数据发生变化时，会触发setter方法，在setter方法中遍历该数据的所有Watcher对象，从而保证视图的同步更新

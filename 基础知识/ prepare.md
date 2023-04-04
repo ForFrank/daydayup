@@ -714,3 +714,10 @@ String、Number、Boolean、Array、Object、Date、Function、Symbol
 **使用场景**
 
 获取dom位置等
+
+#### computed和watch有何区别？
+1.computed是依赖已有的变量来计算一个目标变量，大多数情况都是多个变量凑在一起计算出一个变量，并且computed具有缓存机制，依赖值不变的情况下其会直接读取缓存进行复用，computed不能进行异步操作
+
+2.watch是监听某一个变量的变化，并执行相应的回调函数，通常是一个变量的变化决定多个变量的变化，watch可以进行异步操作
+
+3.简单记就是：一般情况下computed是多对一，watch是一对多

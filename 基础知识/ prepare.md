@@ -731,3 +731,11 @@ String、Number、Boolean、Array、Object、Date、Function、Symbol
 3、依赖收集，Vue.js在模板编译过程中，会对模板中用到的数据进行依赖收集。当数据发生变化时，会自动重新渲染与该数据相关的部分，从而保证视图的同步更新
 
 举例：当我们在Vue.js中使用一个data属性时，例如{{message}}，Vue.js会将其转换为getter方法，并在getter方法中执行依赖收集操作，将Watcher对象添加到数据的订阅列表中，当该数据发生变化时，会触发setter方法，在setter方法中遍历该数据的所有Watcher对象，从而保证视图的同步更新
+
+#### http1.1和http2.0的区别
+#### web端存储数据的方式有哪些，有什么区别
+#### vuex有哪些钩子函数，使用流程
+#### vue-router
+#### wasm的底层逻辑
+#### electron编译打包原理
+

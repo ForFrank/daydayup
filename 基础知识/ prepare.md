@@ -711,3 +711,5 @@ String、Number、Boolean、Array、Object、Date、Function、Symbol
 2）优先使用 Promise，因为根据 event loop 与浏览器更新渲染时机，宏任务 → 微任务 → 渲染更新，使用微任务，本次 event loop 轮询就可以获取到更新的 dom
 
 3）如果使用宏任务，要到下一次 event loop 中，才能获取到更新的 dom
+
+#### promise.all()如何拿到每个值，es6 新特性，鉴权流程

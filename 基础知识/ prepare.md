@@ -749,3 +749,23 @@ String、Number、Boolean、Array、Object、Date、Function、Symbol
 #### promise.all()如何拿到每个值，es6 新特性，鉴权流程
 
 #### 懒加载
+
+#### vue css scoped 原理
+
+1、编译时，会给每个 vue 文件生成一个唯一的 id，会将此 id 添加到当前文件中所有 html 的标签上，如*<div class="demo"></div>* 会被编译成*<div class="demo" data-v-27e4e96e></div>*
+
+2、编译 style 标签时，会将 css 选择器改造成属性选择器，如*.demo{color:red;}*会被编译成*.demo[data-v-27e4e96e]{color:red;}*
+
+#### 虚拟 dom
+
+**什么是虚拟 dom**
+
+*Virtual DOM*是 JS 模拟真实 DOM 节点，这个对象就是更加轻量级的 DOM 的描述
+
+**为什么现在主流的框架都使用虚拟 dom？**
+
+1、前端性能优化的一个秘诀就是尽可能少地操作 DOM，频繁变动 DOM 会造成浏览器的回流或者重绘
+
+2、使用虚拟 dom，当数据变化，页面需要更新时，通过 diff 算法，对新旧虚拟 dom 节点进行对比，比较两棵树的差异，生成差异对象，一次性对 dom 进行批量操作，进而有效提高性能
+
+3、虚拟 dom 本质上时 js 对象，而 dom 与平台强相关，相比之下虚拟 dom 可以进行更方便的跨平台操作，例如服务器渲染、weex 开发等

@@ -769,3 +769,71 @@ String、Number、Boolean、Array、Object、Date、Function、Symbol
 2、使用虚拟 dom，当数据变化，页面需要更新时，通过 diff 算法，对新旧虚拟 dom 节点进行对比，比较两棵树的差异，生成差异对象，一次性对 dom 进行批量操作，进而有效提高性能
 
 3、虚拟 dom 本质上时 js 对象，而 dom 与平台强相关，相比之下虚拟 dom 可以进行更方便的跨平台操作，例如服务器渲染、weex 开发等
+
+#### vuex 原理
+
+1）vuex 中的 store 本质就是一个没有 template 模板的隐藏式的 vue 组件
+
+2）vuex 是利用 vue 的 mixin 混入机制，在 beforeCreate 钩子前混入 vuexInit 方法
+
+3）vuexInit 方法实现将 vuex store 注册到当前组件的$store 属性上
+
+4）vuex 的 state 作为一个隐藏的 vue 组件的 data，定义在 state 上面的变量，相当于这个 vue 实例的 data 属性，凡是定义在 data 上的数据都是响应式的
+
+5）当页面中使用了 vuex state 中的数据，就是依赖收集的过程，当 vuex 中 state 中的数据发生变化，就通过调用对应属性的 dep 对象的 notify 方法，去修改视图变化
+
+#### vue-router 原理
+
+1）创建的页面路由会与该页面形成一个路由表（key value 形式，key 为该路由，value 为对应的页面）
+
+2）vue-router 原理是监听 URL 的变化，然后匹配路由规则，会用新路由的页面替换到老的页面 ，无需刷新
+3）目前单页面使用的路由有两种实现方式: hash 模式、history 模式
+
+4）hash 模式（路由中带#号），通过 hashchange 事件来监听路由的变化
+_window.addEventListener('hashchange', （)=>{})_
+
+5）history 模式，利用了 pushState() 和 replaceState() 方法，实现往 history 中添加新的浏览记录、或替换对应的浏览记录
+通过 popstate 事件来监听路由的变化，_window.addEventListener('popstate', （)=>{})_
+
+**路由之间是怎么跳转的？有哪些方式？**
+
+声明式 通过使用内置组件<router-link :to="/home">来跳转
+
+编程式 通过调用 router 实例的 push 方法 router.push({ path: '/home' })或 replace 方法 router.replace({ path: '/home' })
+
+**route 和 router 有什么区别**
+
+route 是“路由信息对象”，包括 path，params，hash，query，fullPath，matched，name 等路由信息参数。 而 router 是“路由实例对象”，包括了路由的跳转方法，钩子函数等。
+
+#### vue3 与 vue2 的区别
+
+1）vue3 性能比 Vue2.x 快 1.2~2 倍
+
+2）使用 proxy 取代 Object.defineproperty，解决了 vue2 中新增属性监听不到的问题，同时 proxy 也支持数组，不需要像 vue2 那样对数组的方法做拦截处理
+
+3）diff 方法优化
+vue3 新增了静态标记（patchflag），虚拟节点对比时，就只会对比这些带有静态标记的节点
+
+4）静态提升
+vue3 对于不参与更新的元素，会做静态提升，只会被创建一次，在渲染时直接复用即可。vue2 无论元素是否参与更新，每次都会重新创建然后再渲染
+
+5）事件侦听器缓存
+默认情况下 onClick 会被视为动态绑定，所以每次都会追踪它的变化，但是因为是同一个函数，所以不用追踪变化，直接缓存起来复用即可
+
+6）按需引入，通过 treeSharking 体积比 vue2.x 更小
+
+7）组合 API（类似 react hooks），可以将 data 与对应的逻辑写到一起，更容易理解
+
+8）提供了很灵活的 api 比如 toRef、shallowRef 等等，可以灵活控制数据变化是否需要更新 ui 渲染
+
+9）更好的 Ts 支持
+
+#### 强缓存、协商缓存
+
+**强缓存**
+
+如为强制缓存，通过 Expires 或 Cache-Control：max-age 判断该缓存是否过期，未过期，直接使用该资源；Expires 和 max-age，如果两者同时存在，则被 Cache-Control 的 max-age 覆盖。
+
+**协商缓存**
+
+如为协商缓存，请求头部带上相关信息如 if-none-match（Etag）与 if-modified-since(last-modified)，验证缓存是否有效，若有效则返回状态码为 304，若无效则重新返回资源，状态码为 200

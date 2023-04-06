@@ -845,6 +845,60 @@ vue3 对于不参与更新的元素，会做静态提升，只会被创建一次
 2、批量更新dom元素属性，如果需要更新dom元素的属性，例如class、style、innerHTML等，可以将需要更新的属性先存储在一个对象中，然后早用循环遍历要更新的dom元素，一次性地更新它们的属性
 
 #### 控制并发数，例如有100个请求，请合理设计请求
+
+1、手动设置最大并发数：维护一个计数器，每次发起请求前先检查当前并发数是否小于最大并发数，如果是则执行请求，否则等待其他请求完成后再执行
+
+```
+const urls = ['url1','url2','url3',...]
+const maxConcurrent = 10 //最大并发数
+let currentCount = 0 //当前并发数
+function fetchData(url) {
+  return fetch(url).the(res=>res.json())
+}
+async function fetchWithcLimit() {
+  for (let i = 0; i<urls.length; i++){
+    if(currentCount>=maxConcurrent){
+      await new Promise(resolve => setTimeout(resolve,1000)) //等待1秒钟
+    }
+    fetchData(urls[i]).then(data=>{
+      console.log(data)
+      currentCount--
+    })
+    currentCount++
+  }
+}
+fetchWithcLimit()
+```
+
+2、使用请求队列：将搜游请求加入到一个队列中，每次队列中取出一定数量的请求执行
+```
+const urls = ['url1','url2','url3',...]
+const maxConcurrent = 10 //最大并发数
+let currentCount = 0 //当前并发数
+const queue=urls.map(url=>{
+  ()=>{
+    fetch(url).the(res=>res.json())
+  }
+})
+async function fetchWithcLimit() {
+  while(quequ.length>=0){
+    if(currentCount<maxConcurrent){
+      const task = quequ.shift()
+      task().then(data=>{
+        console.log(data)
+        currentCount--
+      })
+      currentCount++
+    }else{
+        await new Promise(resolve => setTimeout(resolve,1000)) //等待1秒钟
+    }
+    
+  }
+}
+fetchWithcLimit()
+```
+
+
 #### 请讲一讲对模块规范的理解
 
 在javascript中，模块规范是指一种将代码组织在小的、独立的单元中，隔离作用域和避免全局变量污染的方法。常见的模块规范包括CommonJS、AMD、ES6 Module等

@@ -839,5 +839,18 @@ vue3 对于不参与更新的元素，会做静态提升，只会被创建一次
 如为协商缓存，请求头部带上相关信息如 if-none-match（Etag）与 if-modified-since(last-modified)，验证缓存是否有效，若有效则返回状态码为 304，若无效则重新返回资源，状态码为 200
 
 #### 有1000个dom，要更新其中的100个，如何操作才能减少dom操作
+
+1、使用documentfragment,将需要更新的dom元素挂载到documentfragment上，然后再一次性地将doncmentFragment插入到页面中
+
+2、批量更新dom元素属性，如果需要更新dom元素的属性，例如class、style、innerHTML等，可以将需要更新的属性先存储在一个对象中，然后早用循环遍历要更新的dom元素，一次性地更新它们的属性
+
 #### 控制并发数，例如有100个请求，请合理设计请求
 #### 请讲一讲对模块规范的理解
+
+在javascript中，模块规范是指一种将代码组织在小的、独立的单元中，隔离作用域和避免全局变量污染的方法。常见的模块规范包括CommonJS、AMD、ES6 Module等
+
+CommonJS是Node.js采用的模块规范，它使用require和module。exports来定义和导出模块。一个CommomJS模块由若干个函数和变量组成，可以通过require函数加载并使用
+
+AMD是一种异步模块定义规范，适用于浏览器环境下的模块加载。它使用define函数定义模块，并支持在模块内部异步加载其他模块
+
+ES6 Module是ECMAScript6引入的模块规范，它使用import和export关键字来定义和导出模块。一个ES6 Module是一个单独的文件，文件内部的函数和变量默认不会被其他文件访问，需要通过export来导出

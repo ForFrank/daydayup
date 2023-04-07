@@ -908,3 +908,14 @@ CommonJS是Node.js采用的模块规范，它使用require和module。exports来
 AMD是一种异步模块定义规范，适用于浏览器环境下的模块加载。它使用define函数定义模块，并支持在模块内部异步加载其他模块
 
 ES6 Module是ECMAScript6引入的模块规范，它使用import和export关键字来定义和导出模块。一个ES6 Module是一个单独的文件，文件内部的函数和变量默认不会被其他文件访问，需要通过export来导出
+
+#### js引擎线程和http异步请求线程的区别
+
+在浏览器中，Javascript引擎线程和http异步请求线程是两个不同的线程，它们之间存在一些关系，但并不是直接相关的关系
+
+当Javascript代码发起一个异步的hppt请求时，例如通过xmlhttprequest对象或fetch api发送请求时，浏览器会在另一个线程（通常是网络线程）中处理该请求，并在响应到达时将回调函数放入javascript任务队列中等待执行
+
+当javascript引擎空闲时，它会从任务队列中取出一个任务并执行，这个任务可以是通过异步http请求返回的回调函数。因为javascript引擎线程只有一个，所以在执行回调函数期间，它无法同时执行其他javascript代码
+
+总之，javascript引擎线程和http异步请求线程没有直接关系，异步http请求会在另外的线程中执行，而回掉函数的执行则是由javascript引擎线程负责的。当回调函数被执行时，javascript引擎线程会暂停当前任务并执行回调函数，然后继续执行其他javascript代码
+

@@ -828,15 +828,6 @@ vue3 对于不参与更新的元素，会做静态提升，只会被创建一次
 
 9）更好的 Ts 支持
 
-#### 强缓存、协商缓存
-
-**强缓存**
-
-如为强制缓存，通过 Expires 或 Cache-Control：max-age 判断该缓存是否过期，未过期，直接使用该资源；Expires 和 max-age，如果两者同时存在，则被 Cache-Control 的 max-age 覆盖。
-
-**协商缓存**
-
-如为协商缓存，请求头部带上相关信息如 if-none-match（Etag）与 if-modified-since(last-modified)，验证缓存是否有效，若有效则返回状态码为 304，若无效则重新返回资源，状态码为 200
 
 #### 有1000个dom，要更新其中的100个，如何操作才能减少dom操作
 
@@ -925,4 +916,43 @@ ES6 Module是ECMAScript6引入的模块规范，它使用import和export关键�
 ](https://blog.csdn.net/luoluoxx0115/article/details/121212371)
 
 [八股](https://blog.csdn.net/qq_33277654/article/details/112758362?spm=1001.2014.3001.5502)
+
+#### 强缓存、协商缓存
+
+**强缓存**
+
+如为强制缓存，通过 Expires 或 Cache-Control：max-age 判断该缓存是否过期，未过期，直接使用该资源；Expires 和 max-age，如果两者同时存在，则被 Cache-Control 的 max-age 覆盖。
+
+**协商缓存**
+
+如为协商缓存，请求头部带上相关信息如 if-none-match（Etag）与 if-modified-since(last-modified)，验证缓存是否有效，若有效则返回状态码为 304，若无效则重新返回资源，状态码为 200
+
+#### 从输入URL到页面加载发生了什么
+
+1、浏览器查找当前URL是否存在缓存，并比较缓存是否过期
+
+2、dns解析
+
+3、根据ip建立tcp连接（三次握手）
+
+4、http发起请求
+
+5、服务器处理请求，浏览器接收http响应
+
+6）渲染页面，构建DOM树
+
+①HTML 解析，生成DOM树
+
+②根据 CSS 解析生成 CSS 树
+
+③结合 DOM 树和 CSS 规则树，生成渲染树
+
+④根据渲染树计算每一个节点的信息（layout布局）
+
+⑤根据计算好的信息绘制页面
+
+如果遇到 script 标签，则判断是否含有 defer 或者 async 属性，如果有，异步去下载该资源；如果没有设置，暂停dom的解析，去加载script的资源，然后执行该js代码（script标签加载和执行会阻塞页面的渲染）
+
+7、关闭TCP连接（四次挥手）
+
 

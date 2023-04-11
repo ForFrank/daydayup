@@ -995,4 +995,28 @@ console.log(numFormat(b)); // "673,439.4542"
 
 ```
 
+#### js–for循环每隔一秒打印一个数（1 2 3 4 5）
+
+考察词法作用域
+```
+//ES6：let 
+for( let i = 1 ; i < 6 ; i++ ){
+	setTimeout( function(){
+		console.log( i )
+	},1000*i )
+}
+
+//立即执行函数 闭包
+for( var i = 1 ; i < 6 ; i++ ){
+	(function(j){
+		setTimeout( function(){
+			console.log( j )
+		},1000*j )
+	})(i)
+}
+
+```
+
+
+
 

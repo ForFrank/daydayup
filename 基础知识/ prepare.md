@@ -955,4 +955,44 @@ ES6 Module是ECMAScript6引入的模块规范，它使用import和export关键�
 
 7、关闭TCP连接（四次挥手）
 
+#### 千分位
+
+方法一：
+
+```
+let num = 1234567890;
+num.toLocaleString(); //"1,234,567,890"
+
+
+```
+
+方法二：
+
+```
+function numFormat(num){
+    num=num.toString().split(".");  // 分隔小数点
+    var arr=num[0].split("").reverse();  // 转换成字符数组并且倒序排列
+    var res=[];
+    for(var i=0,len=arr.length;i<len;i++){
+      if(i%3===0&&i!==0){
+         res.push(",");   // 添加分隔符
+      }
+      res.push(arr[i]);
+    }
+    res.reverse(); // 再次倒序成为正确的顺序
+    if(num[1]){  // 如果有小数的话添加小数部分
+      res=res.join("").concat("."+num[1]);
+    }else{
+      res=res.join("");
+    }
+    return res;
+}
+
+var a=1234567894532;
+var b=673439.4542;
+console.log(numFormat(a)); // "1,234,567,894,532"
+console.log(numFormat(b)); // "673,439.4542"
+
+```
+
 

@@ -1073,9 +1073,24 @@ margin塌陷是指两个响铃的块级元素之间，它们的上下margin值�
 冒泡是时间目标开始冒泡，直到根节点，而不惑则是从更节电开始向下捕获，直到时间目标
 
 在事件传播过程中，先执行捕获阶段的监听器，然后再执行目标元素上的监听器，最后再执行冒泡阶段的监听器。可以通过addEventListener方法的第三个参数来控制哪种机制，默认情况下是采用冒泡机制
+
 #### css实现字体省略号
+
+使用css的text-overflow属性，需要将文本容器宽度固定，并设置overflow为hidden，然后使用text-overflow属性指定省略号位置，如下所示：
+
+```
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: elipsis;
+}
+```
+
 #### 绝对定位是相对什么，如何实现
 
+绝对定位是相对最近的已定位的祖先元素，如果没有已定位的祖先元素，则相对于最初的包含块（通常是文档的根元素）进行定位
+
+实现绝对定位可以使用css的position属性，并将其值设置为absolute。此外，还需要使用top、bottom、left、right属性来制定元素相对父元素或文档的位置
 
 
 

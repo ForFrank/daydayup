@@ -110,14 +110,16 @@ console.log('result', result) // { a: '1', b: '2', c: 'xx', d: '' }
 
 
 /*拆解URL参数中queryString，返回一个 key - value 形式的 object*/
-function querySearch(url) {
-const queryArr = url.split('?')[1].split('&');
-const result = {};
-for (let i = 0; i < queryArr.length; i++) {
-const pair = queryArr[i].split('=');
-const key = pair[0];
-const value = pair[1] ? pair[1] : '';
-result[key] = value;
-}
-return result;
+function querySearch(url){
+  let arr = url.split('?')[1].split('#')[0].split('&')
+  let res = {}
+  arr.map(item=>{
+    let pair = item.split('=')
+     pair[1] ?  pair[1]: pair[1] = ''
+    res[pair[0]]  = pair[1]
+     console.log(pair)
+    
+  })
+  console.log(arr)
+  return res
 }

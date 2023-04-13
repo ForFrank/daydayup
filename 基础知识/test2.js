@@ -44,8 +44,8 @@ const steps = [
 const fn = function (start,end) {
   // 具体实现
 
-  let newStart = new Data(start)
-  let newEnd = new Data(end)
+  let newStart = new Data(start).getTime()
+  let newEnd = new Data(end).getTime()
   let count = 0
   steps.map((item,index)=>{
     if(item.timestamp>=newStart && tem.timestamp<=newEnd){
@@ -58,15 +58,47 @@ const fn = function (start,end) {
   return count 
   
 }
+
+//reduce方法
+const fn = function (start, end) {
+  const newStart = new Date(start).getTime();
+  const newEnd = new Date(end).getTime();
+  const count = steps.reduce((prev, curr) => {
+    if (curr.timestamp >= newStart && curr.timestamp <= newEnd) {
+      return prev + curr.step;
+    } else {
+      return prev;
+    }
+  }, 0);
+  return count;
+}
 const time = fn('2020-09-01 00:00:00', '2020-09-07 23:59:59')
 console.log(time);
 
 // 请编写一个函数，实现在一个排序好的数组中查找指定的数值，并返回该数值在数组中的索引。如果该数值不存在，则返回-1。要求算法时间复杂度为O(log n)。 
 // 并为其编写测试用例。
 
-function findIndex(arr,num){
-  let index = -1
+function binarySearch(arr, target) {
+  let left = 0;
+  let right = arr.length - 1;
+
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+
+    if (arr[mid] === target) {
+      return mid;
+    } else if (arr[mid] < target) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+
+  return -1;
 }
+const arr = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19];
+console.log(binarySearch(arr, 7)); // 3
+console.log(binarySearch(arr, 10)); // -1
 ///--------
 
 // 入参格式参考：
@@ -79,12 +111,13 @@ console.log('result', result) // { a: '1', b: '2', c: 'xx', d: '' }
 
 /*拆解URL参数中queryString，返回一个 key - value 形式的 object*/
 function querySearch(url) {
-  // your code are here...
-  let res = {}
-  let index = url.indexOf('?')+1
-  for (let i = index; i <= url.length; i++){
-    if(match(/[a-z]/,url[i]) {
-      
-    }
-  }
+const queryArr = url.split('?')[1].split('&');
+const result = {};
+for (let i = 0; i < queryArr.length; i++) {
+const pair = queryArr[i].split('=');
+const key = pair[0];
+const value = pair[1] ? pair[1] : '';
+result[key] = value;
+}
+return result;
 }

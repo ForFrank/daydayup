@@ -1069,7 +1069,7 @@ CORS需要浏览器和服务器同时支持。目前，所有浏览器都支持�
 
 **浏览器将CORS请求分成两类：**
 
-简单请求（simple request）
+**简单请求（simple request）**
 
 ```
 // 请求方法是以下三种方法之一：
@@ -1086,7 +1086,7 @@ Last-Event-ID
 Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain
 ```
 
-非简单请求（not-so-simple request）
+**非简单请求（not-so-simple request）**
 
 非简单请求是那种对服务器有特殊要求的请求，比如请求方法是PUT或DELETE，或者Content-Type字段的类型是application/json。
 
@@ -1100,7 +1100,15 @@ CORS与JSONP的使用目的相同，但是比JSONP更强大
 
 JSONP只支持GET请求，CORS支持所有类型的HTTP请求。JSONP的优势在于支持老式浏览器，以及可以向不支持CORS的网站请求数据
 
-参考：[跨域资源共享 CORS 详解](https://www.ruanyifeng.com/blog/2016/04/cors.html)
+**规避同源策略的三种方法**
+
+jsonp、websocket、cors
+
+参考：
+
+[跨域资源共享 CORS 详解](https://www.ruanyifeng.com/blog/2016/04/cors.html)
+
+[浏览器同源政策及其规避方法](https://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html)
 
 #### 冒泡和捕获
 

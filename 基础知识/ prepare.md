@@ -1061,15 +1061,46 @@ margin 塌陷是指两个响铃的块级元素之间，它们的上下 margin �
 
 即跨域资源共享，用于在跨域资源请求时授权服务器访问宁一个来源的资源。要实现 cors，服务器需要在响应中包含特殊的 http 头信息，而浏览器则会检查这些头信息来决定是否允许跨域请求
 
-浏览器只能发送同源请求，即协议、主机和端口号均相同的请求
+CORS需要浏览器和服务器同时支持。目前，所有浏览器都支持该功能，IE浏览器不能低于IE10。
 
-如果需要从非同源地址获取资源，浏览器会发起 options 预检请求，以确认服务器是否允许跨域资源共享
+整个CORS通信过程，都是浏览器自动完成，不需要用户参与。对于开发者来说，CORS通信与同源的AJAX通信没有差别，代码完全一样。浏览器一旦发现AJAX请求跨源，就会自动添加一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。
 
-服务器可以通过设置 access-control-orgin 头信息来指定允许访问该资源的来源列表
+因此，实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信。
 
-其他相关的 access-control-allow-\*头信息也可以用于限制访问，如 access-control-allow-methods 和 access-control-allow-headers 等
+**浏览器将CORS请求分成两类：**
 
-如果服务器没有正确地配置 cors 头信息，则浏览器会阻止跨域请求，并在 javascript 控制台中显示错误信息
+简单请求（simple request）
+
+```
+// 请求方法是以下三种方法之一：
+
+HEAD
+GET
+POST
+// HTTP的头信息不超出以下几种字段：
+
+Accept
+Accept-Language
+Content-Language
+Last-Event-ID
+Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain
+```
+
+非简单请求（not-so-simple request）
+
+非简单请求是那种对服务器有特殊要求的请求，比如请求方法是PUT或DELETE，或者Content-Type字段的类型是application/json。
+
+非简单请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为"预检"请求（preflight）。
+
+浏览器先询问服务器，当前网页所在的域名是否在服务器的许可名单之中，以及可以使用哪些HTTP动词和头信息字段。只有得到肯定答复，浏览器才会发出正式的XMLHttpRequest请求，否则就报错。
+
+**与JSONP的比较**
+
+CORS与JSONP的使用目的相同，但是比JSONP更强大
+
+JSONP只支持GET请求，CORS支持所有类型的HTTP请求。JSONP的优势在于支持老式浏览器，以及可以向不支持CORS的网站请求数据
+
+参考：[跨域资源共享 CORS 详解](https://www.ruanyifeng.com/blog/2016/04/cors.html)
 
 #### 冒泡和捕获
 

@@ -1078,7 +1078,31 @@ img、background-image、svg、canvas、webgl
 
 #### margin 塌陷
 
-margin 塌陷是指两个响铃的块级元素之间，它们的上下 margin 值会合并（取最大值），导致实际的 margin 值比预期的要小。具体来说，当一个元素没有 border 或 padding，且其内部没有内容或每部子元素时，它的上下 margin 值都可能会和相邻元素的 margin 值合并。这种情况下，需要通过添加边框、内边距、清除浮动等方式防止 margin 塌陷的发生
+margin 塌陷是指两个相邻的块级元素之间，它们的上下 margin 值会合并（取最大值），导致实际的 margin 值比预期的要小。具体来说，当一个元素没有 border 或 padding，且其内部没有内容或每部子元素时，它的上下 margin 值都可能会和相邻元素的 margin 值合并。这种情况下，需要通过添加边框、内边距、清除浮动等方式防止 margin 塌陷的发生
+
+#### bfc
+
+**定义：**
+
+bfc是块级格式上下文，是一个独立的渲染区域，让处于bfc内部的元素与外部的元素相互隔离，使内外元素的定位不会相互影响
+
+**触发条件：**
+
+1、position:absolute/fixed
+
+2、display:inline-block/table/flex
+
+3、float：除设置none以外的值
+
+4、overflow除visible以外的值，（hidden、auto、scroll）
+
+**特性和应用**
+
+1、阻止margin重叠
+
+2、清除浮动
+
+3、自适应两栏布局，左float+右bfc
 
 #### 哪些标签可以跨域
 
